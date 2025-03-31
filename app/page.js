@@ -1,8 +1,11 @@
+"use client";
 import Image from "next/image";
 import localFont from "next/font/local";
 import Link from "next/link";                 
 
-
+const redirectToGithub = () => {
+  window.location.href = "https://github.com/Programmer60";
+}
 
 const poppins = localFont({
   src: "./fonts/Poppins-ExtraBold.ttf",
@@ -22,8 +25,8 @@ export default function Home() {
             We are the most straightfoward URL Shortener in the world. Most of the url shorteners will track you or ask you to give your details for login. We understand your needs and hence we have created this URL shortener
           </p>
           <div className='flex gap-3 justify-start'>
-          <Link href="/shorten"><button className='bg-purple-500 rounded-lg shadow-lg p-3 py-1 font-bold text-white'>Try Now</button></Link>
-          <Link href="/github"><button className='bg-purple-500 rounded-lg shadow-lg p-3 py-1 font-bold text-white'>GitHub</button></Link>
+          <Link href="/shorten"><button className='bg-purple-500 rounded-lg shadow-lg p-3 py-1 font-bold text-white cursor-pointer'>Try Now</button></Link>
+          <Link href="/github"><button onClick={redirectToGithub} className='bg-purple-500 rounded-lg shadow-lg p-3 py-1 font-bold text-white cursor-pointer' >GitHub</button></Link>
         </div>
         </div>
         <div className=" flex justify-start relative">
