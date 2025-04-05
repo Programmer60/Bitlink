@@ -1,22 +1,19 @@
-import { redirect } from "next/navigation"
-import clientPromise from "@/lib/mongodb"
-
+import clientPromise from "@/lib/mongodb";
+import { redirect } from "next/navigation";
 
 export default async function Page({ params }) {
-    const shorturl = (await params).shorturl
+  const client = await clientPromise;
+  const db = client.db("Bitlink");
+  const collection = db.collection("url");
 
-    const client = await clientPromise;
-    const db = client.db("bitlinks")
-    const collection = db.collection("url")
+  const data = await collection.findOne({ shorturl: params.shorturl });
 
-    const doc = await collection.findOne({shorturl: shorturl})
-    console.log(doc)
-    if(doc){
-         redirect(doc.url)
-    }
-    else{
-        redirect(`${process.env.NEXT_PUBLIC_HOST}`)
-    }
-
-    return <div>My Post: {url}</div>
+  if (data) {
+    // Add safety check
+    const finalUrl = data.url.startsWith("http") ? data.url : `https://${data.url}`;
+    redirect(finalUrl);
+  } else {
+    // Redirect to custom error page or homepage if not found
+    redirect("/error"); // Make sure /error exists
   }
+}
